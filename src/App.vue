@@ -5,3 +5,5 @@
     <!-- footer -->
   </div>
 </template>
+
+<style scoped></style>

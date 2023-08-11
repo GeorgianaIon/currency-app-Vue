@@ -1,5 +1,5 @@
 /* color palette from <https://github.com/vuejs/theme> */
-:root {
+/* :root {
   --vt-c-white: #ffffff;
   --vt-c-white-soft: #f8f8f8;
   --vt-c-white-mute: #f2f2f2;
@@ -21,7 +21,7 @@
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
 
-/* semantic color variables for this project */
+
 :root {
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
@@ -59,7 +59,6 @@
 }
 
 body {
-  min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);
   transition: color 0.5s, background-color 0.5s;
@@ -70,4 +69,30 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+} */
+
+body {
+  background-image: url('./images/upperWave.png');
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: 100% 50%;
+}
+
+@font-face {
+  font-family: 'InterRegular';
+  src: url('./fonts/Inter-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'InterBold';
+  src: url('./fonts/Inter-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+h1 {
+  font-size: 3.1rem;
+  font-family: 'InterRegular';
 }
