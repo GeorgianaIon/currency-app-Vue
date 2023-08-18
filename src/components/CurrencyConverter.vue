@@ -39,7 +39,7 @@ const convert = () => {
 <style>
 .title {
     text-align: center;
-    color: #fff;
+    color: var(--white);
 }
 </style>
   

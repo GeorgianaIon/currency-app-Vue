@@ -21,6 +21,7 @@
   
 <script setup>
 import { ref } from 'vue';
+// import Colors from '../assets/constants/Colors';
 
 const activeTab = ref('convert');
 
@@ -36,11 +37,11 @@ const reverseCurrencies = () => {
   
 <style scoped>
 .currency-converter-container {
-    background-color: #ECF0FF;
+    background-color: var(--white-blue);
     width: 75rem;
     margin: auto;
     border-radius: 1.25rem;
-    border: 1px solid #5BC0F8;
+    border: 1px solid var(--light-blue);
 
 }
 
@@ -54,16 +55,16 @@ const reverseCurrencies = () => {
 .tabs button {
     flex: 1;
     padding: 1.75rem 0;
-    border: 1px solid #5BC0F8;
+    border: 1px solid var(--light-blue);
     cursor: pointer;
     transition: background-color 0.3s ease-in-out;
-    background-color: #D2EFFF;
+    background-color: var(--lighter-blue);
     font-size: 1.8rem;
-    color: #0081C9;
+    color: var(--blue);
 }
 
 .tabs button.active {
-    background-color: #ECF0FF;
+    background-color: var(--white-blue);
     color: black !important;
 }
 
@@ -97,7 +98,7 @@ const reverseCurrencies = () => {
     border: 1px solid #ccc;
     border-radius: 0.63rem;
     height: 3.9rem;
-    border: 1px solid #5BC0F8;
+    border: 1px solid var(--light-blue);
 }
 
 .reverse-icon {

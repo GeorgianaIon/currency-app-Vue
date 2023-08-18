@@ -96,3 +96,14 @@ h1 {
   font-size: 3.1rem;
   font-family: 'InterRegular';
 }
+
+:root {
+  --white-blue: #fbfcff;
+  --white: #ffffff;
+  --black: #000000;
+  --light-blue: #5BC0F8;
+  --lighter-blue: #D2EFFF;
+  --blue: #0081C9;
+
+  /* Add more variables for fonts, spacing, etc. */
+}
