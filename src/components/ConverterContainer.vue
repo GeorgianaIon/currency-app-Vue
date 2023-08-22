@@ -8,9 +8,13 @@
         </div>
         <div v-if="activeTab === 'convert'" class="convert-tab">
             <div class="converter-inputs">
-                <input class="from-input" type="text" v-model="fromCurrency" placeholder="From" />
+                <Input type="text" v-model="fromCurrency" label="From" />
                 <i class="fa-solid fa-repeat reverse-icon" @click="reverseCurrencies"></i>
-                <input class="to-input" type="text" v-model="toCurrency" placeholder="To" />
+                <Input type="text" v-model="toCurrency" label="To" />
+            </div>
+            <div class="converter-inputs">
+                <Input type="number" v-model="amount" label="Amount" />
+                <button>Convert</button>
             </div>
         </div>
         <div v-else-if="activeTab === 'charts'">
@@ -21,12 +25,13 @@
   
 <script setup>
 import { ref } from 'vue';
-// import Colors from '../assets/constants/Colors';
+import Input from './Input.vue';
 
 const activeTab = ref('convert');
 
 const fromCurrency = ref('');
 const toCurrency = ref('');
+const amount = ref('');
 
 const reverseCurrencies = () => {
     const temp = fromCurrency.value;
@@ -89,20 +94,11 @@ const reverseCurrencies = () => {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.from-input,
-.to-input {
-    flex: 1;
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 0.63rem;
-    height: 3.9rem;
-    border: 1px solid var(--light-blue);
+    margin-bottom: 1rem;
 }
 
 .reverse-icon {
-    margin: 0 1rem;
+    margin: 1rem 1rem 0rem 1rem;
     font-size: 1.5rem;
     cursor: pointer;
 }

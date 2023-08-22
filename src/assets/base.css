@@ -92,9 +92,49 @@ body {
   font-style: normal;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label,
+p,
+span,
+a,
+button,
+input,
+textarea,
+select {
+  font-family: 'InterRegular';
+}
+
 h1 {
   font-size: 3.1rem;
-  font-family: 'InterRegular';
+}
+
+h2 {
+  font-size: 2.5rem;
+}
+
+h3 {
+  font-size: 2rem;
+}
+
+h4 {
+  font-size: 1.8rem;
+}
+
+h5 {
+  font-size: 1.2rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+label {
+  font-size: 1.25rem;
 }
 
 :root {
@@ -104,6 +144,7 @@ h1 {
   --light-blue: #5BC0F8;
   --lighter-blue: #D2EFFF;
   --blue: #0081C9;
+  --yellow: #FFC93C;
 
   /* Add more variables for fonts, spacing, etc. */
 }
