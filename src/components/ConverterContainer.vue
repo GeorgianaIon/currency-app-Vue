@@ -1,12 +1,12 @@
 <template>
     <div class="currency-converter-container">
         <div class="tabs">
-            <button @click="activeTab = 'convert'" :class="{ active: activeTab === 'convert', radiusLeft: true }"><i
-                    class="fas fa-exchange-alt"></i>Convert</button>
-            <button @click="activeTab = 'charts'" :class="{ active: activeTab === 'charts', radiusRight: true }"><i
-                    class="fas fa-chart-line"></i>Charts</button>
+            <Tab @onClick="handleTabClick" :class="{ active: activeTab === 'Convert', radiusLeft: true }" label="Convert"
+                iconClass="fas fa-exchange-alt" />
+            <Tab @onClick="handleTabClick" :class="{ active: activeTab === 'Charts', radiusRight: true }" label="Charts"
+                iconClass="fas fa-chart-line" />
         </div>
-        <div v-if="activeTab === 'convert'" class="convert-tab">
+        <div v-if="activeTab === 'Convert'" class="convert-tab">
             <div class="converter-inputs">
                 <Input type="text" v-model="fromCurrency" label="From" />
                 <i class="fa-solid fa-repeat reverse-icon" @click="reverseCurrencies"></i>
@@ -17,7 +17,7 @@
                 <button>Convert</button>
             </div>
         </div>
-        <div v-else-if="activeTab === 'charts'">
+        <div v-else-if="activeTab === 'Charts'">
             <!-- Place your Charts component or code here -->
         </div>
     </div>
@@ -26,8 +26,10 @@
 <script setup>
 import { ref } from 'vue';
 import Input from './Input.vue';
+import Tab from './Tab.vue';
 
-const activeTab = ref('convert');
+const activeTab = ref('Convert');
+
 
 const fromCurrency = ref('');
 const toCurrency = ref('');
@@ -37,6 +39,10 @@ const reverseCurrencies = () => {
     const temp = fromCurrency.value;
     fromCurrency.value = toCurrency.value;
     toCurrency.value = temp;
+};
+
+const handleTabClick = (tabLabel) => {
+    activeTab.value = tabLabel;
 };
 </script>
   
