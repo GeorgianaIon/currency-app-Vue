@@ -10,8 +10,8 @@ import { ref } from 'vue';
 const fromCurrency = ref('USD');
 const toCurrency = ref('EUR');
 const amount = ref('');
-const convertedAmount = ref(null);
 const activeTab = ref('convert');
+const convertedAmount = ref(null);
 
 const apiKey = 'duBkTtQCuHMXG3gmbxeli7pxKIGfvufM'
 

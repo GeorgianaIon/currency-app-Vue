@@ -7,15 +7,16 @@
                 iconClass="fas fa-chart-line" />
         </div>
         <div v-if="activeTab === 'Convert'" class="convert-tab">
-            <div class="converter-inputs">
+            <div class="container + from-to-inputs">
                 <Input type="text" v-model="fromCurrency" label="From" />
                 <i class="fa-solid fa-repeat reverse-icon" @click="reverseCurrencies"></i>
                 <Input type="text" v-model="toCurrency" label="To" />
             </div>
-            <div class="converter-inputs">
+            <div class="container + amount-button">
                 <Input type="number" v-model="amount" label="Amount" />
-                <button>Convert</button>
+                <Button @onClick="convert" type="contained" text="Convert" />
             </div>
+            <p>{{ convertedAmount }}</p>
         </div>
         <div v-else-if="activeTab === 'Charts'">
             <!-- Place your Charts component or code here -->
@@ -27,6 +28,7 @@
 import { ref } from 'vue';
 import Input from './Input.vue';
 import Tab from './Tab.vue';
+import Button from './Button.vue';
 
 const activeTab = ref('Convert');
 
@@ -34,6 +36,16 @@ const activeTab = ref('Convert');
 const fromCurrency = ref('');
 const toCurrency = ref('');
 const amount = ref('');
+const convertedAmount = ref(null);
+
+const apiKey = 'duBkTtQCuHMXG3gmbxeli7pxKIGfvufM'
+
+const currencies = [
+    { value: 'USD', label: '$' },
+    { value: 'EUR', label: '€' },
+    { value: 'GBP', label: '£' },
+    { value: 'JPY', label: '¥' },
+];
 
 const reverseCurrencies = () => {
     const temp = fromCurrency.value;
@@ -43,6 +55,19 @@ const reverseCurrencies = () => {
 
 const handleTabClick = (tabLabel) => {
     activeTab.value = tabLabel;
+};
+
+const convert = () => {
+    const url = `https://api.apilayer.com/fixer/convert?from=${fromCurrency.value}&to=${toCurrency.value}&amount=${amount.value}&apikey=${apiKey}`;
+
+    fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+            convertedAmount.value = data.result;
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
 };
 </script>
   
@@ -96,11 +121,18 @@ const handleTabClick = (tabLabel) => {
     padding: 4rem;
 }
 
-.converter-inputs {
+.container {
     display: flex;
-    align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     margin-bottom: 1rem;
+}
+
+.from-to-inputs {
+    align-items: center;
+}
+
+.amount-button {
+    align-items: end;
 }
 
 .reverse-icon {
