@@ -19,7 +19,7 @@ defineProps({
     },
     iconClass: {
         type: String,
-        default: false,
+        default: "",
     },
 });
 </script>

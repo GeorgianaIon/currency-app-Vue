@@ -2,11 +2,13 @@
     <div class="input-wrap">
         <label v-if="label">{{ label }}</label>
         <input @input="$emit('update:modelValue', $event.target.value)" :value="modelValue" :type="type" class="input" />
+        <AutoCompleteDropdown :inputValue="modelValue" />
     </div>
 </template>
   
 <script setup>
-import { defineProps } from 'vue';
+import AutoCompleteDropdown from './AutoCompleteDropdown.vue';
+import { defineProps, ref, computed } from 'vue';
 
 defineProps({
     label: {
@@ -20,8 +22,10 @@ defineProps({
     type: {
         type: String,
         default: "text",
-    }
+    },
 });
+
+
 </script>
 
 <style>
