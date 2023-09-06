@@ -9,14 +9,6 @@
         <div v-if="activeTab === 'Convert'" class="convert-tab">
             <div class="container + from-to-inputs">
                 <Input type="text" v-model="fromCurrency" label="From" />
-                <!-- <div class="currencies-list-wrapper" v-show="fromCurrency">
-                    <ul class="currencies-list">
-                        <li v-for="([code, name]) in filteredCurrencies" :key="code">
-                            {{ code }} - {{ name }}
-                        </li>
-                    </ul>
-                </div> -->
-
                 <i class="fa-solid fa-repeat reverse-icon" @click="reverseCurrencies"></i>
                 <Input type="text" v-model="toCurrency" label="To" />
             </div>
@@ -40,7 +32,6 @@ import { ref, onMounted, computed } from 'vue';
 import Input from './Input.vue';
 import Tab from './Tab.vue';
 import Button from './Button.vue';
-import AutoCompleteDropdown from './AutoCompleteDropdown.vue';
 import { fetchCurrencies, convertCurrency } from '../api/api.js';
 
 const activeTab = ref('Convert');
@@ -81,31 +72,6 @@ const convert = async () => {
 
     convertedAmount.value = 10.79;
 };
-
-const getSymbols = () => {
-    const url = `https://api.apilayer.com/fixer/symbols?apikey=${apiKey}`;
-
-    fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-            currencies.value = data.symbols;
-        })
-        .catch((error) => {
-            console.error('Error:', error);
-        });
-};
-
-// onMounted(() => {
-//     getSymbols();
-// });
-
-
-const filteredCurrencies = computed(() => {
-    const query = fromCurrency.value.toLowerCase(); // Use the user input from the "From" field
-    return Object.entries(currencies.value).filter(([code, name]) => {
-        return code.toLowerCase().includes(query) || name.toLowerCase().includes(query);
-    });
-});
 </script>
   
 <style scoped>
@@ -184,25 +150,6 @@ const filteredCurrencies = computed(() => {
     margin-top: 0;
     display: inline;
     font-weight: normal;
-}
-
-.currencies-list-wrapper {
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
-    width: 31.4rem;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 54px;
-}
-
-.currencies-list {
-    list-style: none;
-}
-
-.currencies-list li {
-    padding: 1rem;
-    border-bottom: 1px solid #ccc;
 }
 </style>
   
