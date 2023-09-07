@@ -1,10 +1,10 @@
 <template>
     <div class="input-wrap">
         <label v-if="label">{{ label }}</label>
-        <input @input="$emit('update:modelValue', $event.target.value)" :value="modelValue" :type="type" class="input" />
-        <div class="currencies-list-wrapper" v-show="modelValue">
+        <input @input="$emit('update:modelValue', search)" v-model="search" :type="type" class="input" />
+        <div class="currencies-list-wrapper" v-show="modelValue && showAutocompleteDropdown">
             <ul class="currencies-list">
-                <li v-for="([code, name]) in filteredCurrencies" :key="code">
+                <li v-for="([code, name]) in filteredCurrencies" :key="code" @click="selectCurrency(code)">
                     {{ code }} - {{ name }}
                 </li>
             </ul>
@@ -15,14 +15,22 @@
 <script setup>
 import { defineProps, ref, computed } from 'vue';
 
-const { label, modelValue, type } = defineProps({
+const { label, modelValue, type, showAutocomplete } = defineProps({
     label: [String, Boolean],
     modelValue: String,
     type: {
         type: String,
         default: "text",
     },
+    showAutocomplete: {
+        type: Boolean,
+        default: false,
+    },
 });
+
+const search = ref('');
+const showAutocompleteDropdown = ref(showAutocomplete);
+
 
 const currencies = ref({
     AED: "United Arab Emirates Dirham",
@@ -35,13 +43,22 @@ const currencies = ref({
 });
 
 const filteredCurrencies = computed(() => {
-    if (modelValue) {
-        const query = modelValue.value.toLowerCase();
+    if (search && showAutocompleteDropdown) {
+        const query = search.value.toLowerCase();
         return Object.entries(currencies.value).filter(([code, name]) => {
             return code.toLowerCase().includes(query) || name.toLowerCase().includes(query);
         });
     }
 });
+
+const selectCurrency = (code) => {
+    search.value = code;
+    showAutocompleteDropdown.value = false;
+};
+
+const handleInput = () => {
+    this.$emit('update:modelValue', search.value)
+}
 
 </script>
 

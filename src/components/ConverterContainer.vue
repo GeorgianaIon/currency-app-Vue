@@ -8,12 +8,13 @@
         </div>
         <div v-if="activeTab === 'Convert'" class="convert-tab">
             <div class="container + from-to-inputs">
-                <Input type="text" v-model="fromCurrency" label="From" />
+                <Input type="text" v-model="fromCurrency" label="From" :show-autocomplete=true />
+                {{ fromCurrency }}
                 <i class="fa-solid fa-repeat reverse-icon" @click="reverseCurrencies"></i>
-                <Input type="text" v-model="toCurrency" label="To" />
+                <Input type="text" v-model="toCurrency" label="To" :show-autocomplete=true />
             </div>
             <div class="container + amount-button">
-                <Input type="number" v-model="amount" label="Amount" />
+                <Input type="number" v-model="amount" label="Amount" :show-autocomplete=false />
                 <Button @onClick="convert" type="contained" text="Convert" />
             </div>
             <div v-if="convertedAmount">
