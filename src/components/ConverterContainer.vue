@@ -8,7 +8,8 @@
         </div>
         <div v-if="activeTab === 'Convert'" class="convert-tab">
             <div class="container + from-to-inputs">
-                <Input type="text" v-model="fromCurrency" label="From" :show-autocomplete=true />
+                <Input type="text" v-model="fromCurrency" label="From" :show-autocomplete=true
+                    @update-value="updateValue" />
                 {{ fromCurrency }}
                 <i class="fa-solid fa-repeat reverse-icon" @click="reverseCurrencies"></i>
                 <Input type="text" v-model="toCurrency" label="To" :show-autocomplete=true />
@@ -72,6 +73,10 @@ const convert = async () => {
     // }
 
     convertedAmount.value = 10.79;
+};
+
+const updateValue = (value) => {
+    fromCurrency.value = value;
 };
 </script>
   

@@ -1,7 +1,7 @@
 <template>
     <div class="input-wrap">
         <label v-if="label">{{ label }}</label>
-        <input @input="$emit('update:modelValue', search)" v-model="search" :type="type" class="input" />
+        <input @input="$emit('updateValue', search)" v-model="search" :type="type" class="input" />
         <div class="currencies-list-wrapper" v-show="modelValue && showAutocompleteDropdown">
             <ul class="currencies-list">
                 <li v-for="([code, name]) in filteredCurrencies" :key="code" @click="selectCurrency(code)">
@@ -13,7 +13,9 @@
 </template>
   
 <script setup>
-import { defineProps, ref, computed } from 'vue';
+import { defineProps, ref, computed, defineEmits } from 'vue';
+
+defineEmits(['updateValue']);
 
 const { label, modelValue, type, showAutocomplete } = defineProps({
     label: [String, Boolean],
@@ -54,12 +56,8 @@ const filteredCurrencies = computed(() => {
 const selectCurrency = (code) => {
     search.value = code;
     showAutocompleteDropdown.value = false;
+    $emit('updateValue', code)
 };
-
-const handleInput = () => {
-    this.$emit('update:modelValue', search.value)
-}
-
 </script>
 
 <style>
@@ -71,6 +69,7 @@ input {
     width: 30.4rem;
     border: 1px solid var(--light-blue);
     margin-top: 0.5rem;
+    position: relative;
 }
 
 .input-wrap {
@@ -86,7 +85,8 @@ input {
     width: 31.4rem;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 100px;
+    z-index: 1;
+    margin-top: 0.5rem;
 }
 
 .currencies-list {
