@@ -1,8 +1,8 @@
 <template>
     <div class="input-wrap">
         <label v-if="label">{{ label }}</label>
-        <input @input="$emit('updateValue', search)" v-model="search" :type="type" class="input" />
-        <div class="currencies-list-wrapper" v-show="modelValue && showAutocompleteDropdown">
+        <input @input="$emit('updateValue', $event.target.value)" v-model="search" :type="type" class="input" />
+        <div class="currencies-list-wrapper" v-show="modelValue && showAutocompleteDropdown && type === 'text'">
             <ul class="currencies-list">
                 <li v-for="([code, name]) in filteredCurrencies" :key="code" @click="selectCurrency(code)">
                     {{ code }} - {{ name }}
@@ -13,9 +13,9 @@
 </template>
   
 <script setup>
-import { defineProps, ref, computed, defineEmits } from 'vue';
+import { defineProps, ref, computed, defineEmits, watch } from 'vue';
 
-defineEmits(['updateValue']);
+const emit = defineEmits(['updateValue', 'update: modelValue']);
 
 const { label, modelValue, type, showAutocomplete } = defineProps({
     label: [String, Boolean],
@@ -45,7 +45,7 @@ const currencies = ref({
 });
 
 const filteredCurrencies = computed(() => {
-    if (search && showAutocompleteDropdown) {
+    if (search.value && typeof search.value !== 'number') {
         const query = search.value.toLowerCase();
         return Object.entries(currencies.value).filter(([code, name]) => {
             return code.toLowerCase().includes(query) || name.toLowerCase().includes(query);
@@ -56,8 +56,14 @@ const filteredCurrencies = computed(() => {
 const selectCurrency = (code) => {
     search.value = code;
     showAutocompleteDropdown.value = false;
-    $emit('updateValue', code)
+    emit('updateValue', code)
 };
+
+watch(search, (newValue) => {
+    if (newValue === '') {
+        showAutocompleteDropdown.value = true;
+    }
+});
 </script>
 
 <style>
@@ -86,7 +92,7 @@ input {
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 1;
-    margin-top: 0.5rem;
+    margin-top: 100px;
 }
 
 .currencies-list {

@@ -9,13 +9,16 @@
         <div v-if="activeTab === 'Convert'" class="convert-tab">
             <div class="container + from-to-inputs">
                 <Input type="text" v-model="fromCurrency" label="From" :show-autocomplete=true
-                    @update-value="updateValue" />
+                    @update-value="updateValue('fromCurrency', $event)" />
                 {{ fromCurrency }}
                 <i class="fa-solid fa-repeat reverse-icon" @click="reverseCurrencies"></i>
-                <Input type="text" v-model="toCurrency" label="To" :show-autocomplete=true />
+                <Input type="text" v-model="toCurrency" label="To" :show-autocomplete=true
+                    @update-value="updateValue('toCurrency', $event)" />
+                {{ toCurrency }}
             </div>
             <div class="container + amount-button">
-                <Input type="number" v-model="amount" label="Amount" :show-autocomplete=false />
+                <Input type="number" v-model="amount" label="Amount" :show-autocomplete=false
+                    @update-value="updateValue('amount', $event)" />
                 <Button @onClick="convert" type="contained" text="Convert" />
             </div>
             <div v-if="convertedAmount">
@@ -44,16 +47,6 @@ const toCurrency = ref('');
 const amount = ref('');
 const convertedAmount = ref('');
 
-const currencies = ref({
-    AED: "United Arab Emirates Dirham",
-    AFN: "Afghan Afghani",
-    ALL: "Albanian Lek",
-    AMD: "Armenian Dram",
-    ANG: "Netherlands Antillean Guilder",
-    RON: "Romanian Leu",
-    DKK: "Danish Krone",
-});
-
 const reverseCurrencies = () => {
     const temp = fromCurrency.value;
     fromCurrency.value = toCurrency.value;
@@ -75,8 +68,14 @@ const convert = async () => {
     convertedAmount.value = 10.79;
 };
 
-const updateValue = (value) => {
-    fromCurrency.value = value;
+const updateValue = (currencyType, value) => {
+    if (currencyType === 'fromCurrency') {
+        fromCurrency.value = value;
+    } else if (currencyType === 'toCurrency') {
+        toCurrency.value = value;
+    } else if (currencyType === 'amount') {
+        amount.value = value;
+    }
 };
 </script>
   
