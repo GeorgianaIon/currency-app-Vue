@@ -9,11 +9,11 @@
         <div v-if="activeTab === 'Convert'" class="convert-tab">
             <div class="container + from-to-inputs">
                 <Input type="text" v-model="fromCurrency" label="From" :show-autocomplete=true
-                    @update-value="updateValue('fromCurrency', $event)" />
+                    @update-value="updateValue('fromCurrency', $event)" :search="fromCurrency" />
                 {{ fromCurrency }}
                 <i class="fa-solid fa-repeat reverse-icon" @click="reverseCurrencies"></i>
                 <Input type="text" v-model="toCurrency" label="To" :show-autocomplete=true
-                    @update-value="updateValue('toCurrency', $event)" />
+                    @update-value="updateValue('toCurrency', $event)" :search="toCurrency" />
                 {{ toCurrency }}
             </div>
             <div class="container + amount-button">
@@ -27,7 +27,7 @@
             </div>
         </div>
         <div v-else-if="activeTab === 'Charts'">
-            <h1>Work in progress!</h1>
+            <h1 style="padding: 2rem">Work in progress!</h1>
         </div>
     </div>
 </template>
@@ -58,6 +58,12 @@ const handleTabClick = (tabLabel) => {
 };
 
 const convert = async () => {
+    if (!amount.value || !fromCurrency.value || !toCurrency.value) {
+        // Show a warning message here, for example, using a toast or alert
+        alert('Please fill in all fields: From, To and Amount');
+        return;
+    }
+
     // try {
     //     const result = await convertCurrency(fromCurrency.value, toCurrency.value, amount.value);
     //     convertedAmount.value = result;

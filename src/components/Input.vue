@@ -1,7 +1,8 @@
 <template>
     <div class="input-wrap">
         <label v-if="label">{{ label }}</label>
-        <input @input="$emit('updateValue', $event.target.value)" v-model="search" :type="type" class="input" />
+        <input @input="$emit('updateValue', $event.target.value)" v-model="search" :value="search" :type="type"
+            class="input" />
         <div class="currencies-list-wrapper" v-show="modelValue && showAutocompleteDropdown && type === 'text'">
             <ul class="currencies-list">
                 <li v-for="([code, name]) in filteredCurrencies" :key="code" @click="selectCurrency(code)">
@@ -15,9 +16,9 @@
 <script setup>
 import { defineProps, ref, computed, defineEmits, watch } from 'vue';
 
-const emit = defineEmits(['updateValue', 'update: modelValue']);
+const emit = defineEmits(['updateValue']);
 
-const { label, modelValue, type, showAutocomplete } = defineProps({
+const { label, modelValue, type, showAutocomplete, search: propSearch } = defineProps({
     label: [String, Boolean],
     modelValue: String,
     type: {
@@ -30,7 +31,7 @@ const { label, modelValue, type, showAutocomplete } = defineProps({
     },
 });
 
-const search = ref('');
+const search = ref(modelValue);
 const showAutocompleteDropdown = ref(showAutocomplete);
 
 
