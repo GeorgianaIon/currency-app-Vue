@@ -18,7 +18,7 @@ import { defineProps, ref, computed, defineEmits, watch } from 'vue';
 
 const emit = defineEmits(['updateValue']);
 
-const { label, modelValue, type, showAutocomplete, search: propSearch } = defineProps({
+const { label, modelValue, type, showAutocomplete } = defineProps({
     label: [String, Boolean],
     modelValue: String,
     type: {
@@ -31,7 +31,7 @@ const { label, modelValue, type, showAutocomplete, search: propSearch } = define
     },
 });
 
-const search = ref(modelValue);
+const search = ref("");
 const showAutocompleteDropdown = ref(showAutocomplete);
 
 
@@ -73,7 +73,8 @@ input {
     border: 1px solid #ccc;
     border-radius: 0.63rem;
     height: 3.5rem;
-    width: 30.4rem;
+    width: 100%;
+    max-width: 30.4rem;
     border: 1px solid var(--light-blue);
     margin-top: 0.5rem;
     position: relative;

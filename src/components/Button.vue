@@ -31,6 +31,10 @@ button {
     border: none;
     cursor: pointer;
     border-radius: 0.6rem;
+
+    @media (max-width: 910px) {
+        margin-top: 3rem;
+    }
 }
 
 .contained {

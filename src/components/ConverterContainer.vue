@@ -9,11 +9,11 @@
         <div v-if="activeTab === 'Convert'" class="convert-tab">
             <div class="container + from-to-inputs">
                 <Input type="text" v-model="fromCurrency" label="From" :show-autocomplete=true
-                    @update-value="updateValue('fromCurrency', $event)" :search="fromCurrency" />
+                    @update-value="updateValue('fromCurrency', $event)" />
                 {{ fromCurrency }}
                 <i class="fa-solid fa-repeat reverse-icon" @click="reverseCurrencies"></i>
                 <Input type="text" v-model="toCurrency" label="To" :show-autocomplete=true
-                    @update-value="updateValue('toCurrency', $event)" :search="toCurrency" />
+                    @update-value="updateValue('toCurrency', $event)" />
                 {{ toCurrency }}
             </div>
             <div class="container + amount-button">
@@ -88,11 +88,12 @@ const updateValue = (currencyType, value) => {
 <style scoped>
 .currency-converter-container {
     background-color: var(--white-blue);
-    width: 75rem;
+    width: 100%;
+    max-width: 75rem;
     margin: auto;
     border-radius: 1.25rem;
     border: 1px solid var(--light-blue);
-
+    box-sizing: border-box;
 }
 
 .tabs {
@@ -133,6 +134,10 @@ const updateValue = (currencyType, value) => {
 
 .convert-tab {
     padding: 4rem;
+
+    @media (max-width: 400px) {
+        padding: 2rem;
+    }
 }
 
 .container {
@@ -140,6 +145,10 @@ const updateValue = (currencyType, value) => {
     justify-content: space-between;
     margin-bottom: 1rem;
 
+    @media (max-width: 400px) {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 .from-to-inputs {
@@ -149,12 +158,23 @@ const updateValue = (currencyType, value) => {
 .amount-button {
     align-items: end;
     margin-bottom: 2.5rem;
+
+    @media (max-width: 910px) {
+        flex-direction: column;
+        align-items: center;
+    }
+
 }
 
 .reverse-icon {
     margin: 1rem 1rem 0rem 1rem;
     font-size: 1.5rem;
     cursor: pointer;
+
+    @media (max-width: 1200px) {
+        margin: 1rem 1rem 0rem 2rem;
+    }
+
 }
 
 .text-part {
