@@ -14,7 +14,8 @@
 </template>
   
 <script setup>
-import { defineProps, ref, computed, defineEmits, watch } from 'vue';
+import { defineProps, ref, computed, defineEmits, watch, onMounted } from 'vue';
+import { fetchCurrencies } from '../api/api';
 
 const emit = defineEmits(['updateValue']);
 
@@ -47,11 +48,25 @@ const currencies = ref({
 
 const filteredCurrencies = computed(() => {
     if (search.value && typeof search.value !== 'number') {
+        let matches = 0;
+
         const query = search.value.toLowerCase();
         return Object.entries(currencies.value).filter(([code, name]) => {
-            return code.toLowerCase().includes(query) || name.toLowerCase().includes(query);
+            if (matches < 5) {
+                if (code.toLowerCase().includes(query) || name.toLowerCase().includes(query)) {
+                    matches++;
+                    return true; // Include the item in the filtered list
+                } else {
+                    return false; // Exclude the item from the filtered list
+                }
+            } else {
+                return false; // Exclude additional items once the limit is reached
+            }
         });
     }
+
+    // Reset the counter when there's no search value
+    return [];
 });
 
 const selectCurrency = (code) => {
@@ -65,6 +80,18 @@ watch(search, (newValue) => {
         showAutocompleteDropdown.value = true;
     }
 });
+
+const loadCurrencies = async () => {
+    try {
+        currencies.value = await fetchCurrencies();
+    } catch (error) {
+        console.error('Error fetching currencies:', error);
+    }
+};
+
+// onMounted(() => {
+//     loadCurrencies();
+// });
 </script>
 
 <style>
