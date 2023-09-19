@@ -10,12 +10,12 @@
             <div class="container + from-to-inputs">
                 <Input type="text" v-model="fromCurrency" label="From" :show-autocomplete=true
                     @update-value="updateValue('fromCurrency', $event)" />
-                {{ fromCurrency }}
                 <i class="fa-solid fa-repeat reverse-icon" @click="reverseCurrencies"></i>
                 <Input type="text" v-model="toCurrency" label="To" :show-autocomplete=true
                     @update-value="updateValue('toCurrency', $event)" />
-                {{ toCurrency }}
             </div>
+            {{ fromCurrency }}
+            {{ toCurrency }}
             <div class="container + amount-button">
                 <Input type="number" v-model="amount" label="Amount" :show-autocomplete=false
                     @update-value="updateValue('amount', $event)" />
